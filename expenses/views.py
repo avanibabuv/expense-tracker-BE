@@ -13,6 +13,9 @@ from google import genai
 
 load_dotenv()
 
+def home_ui(request):
+    return render(request,"expenses/home_ui.html")
+
 
 class ExpenseCreateAPI(APIView):
 
