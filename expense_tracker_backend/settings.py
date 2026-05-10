@@ -142,7 +142,7 @@ SIMPLE_JWT = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  
-    "https://expense-tracker-fe-9g5i.vercel.app/",
+    "https://expense-tracker-fe-9g5i.vercel.app",
 ]
 
 CORS_ALLOW_HEADERS = [
