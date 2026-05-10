@@ -66,17 +66,34 @@ class ExpenseAiOverviewAPI(APIView):
 
     def get(self, request):
         user = request.user
+
         expenses = Expense.objects.filter(user=user)
-        data = list(expenses.values("category", "amount", "created_date", "note"))
-        prompt = f"""
-            Analyse this expense data and give a short summary and advice
 
-            {data}
-
-            keep it simple and user friendly.
-        """
-        client = genai.Client()
-        response = client.models.generate_content(
-            model="gemini-3-flash-preview", contents=prompt
+        data = list(
+            expenses.values(
+                "category",
+                "amount",
+                "created_date",
+                "note"
+            )
         )
+
+        prompt = f"""
+        Analyse this expense data and give a short summary and advice.
+
+        {data}
+
+        Keep it simple and user friendly.
+        """
+
+        client = genai.Client(
+            api_key=os.getenv("GEMINI_API_KEY")
+        )
+
+        response = client.models.generate_content(
+            model="gemini-2.0-flash",
+            contents=prompt
+        )
+
         return Response(response.text, status=HTTP_200_OK)
+    
